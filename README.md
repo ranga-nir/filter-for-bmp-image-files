@@ -22,7 +22,7 @@ This project is a command-line image processing tool that applies various filter
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/image-filter.git
+   git clone https://github.com/ranga-nir/filter-for-bmp-image-files.git
    cd image-filter
    ```
 
