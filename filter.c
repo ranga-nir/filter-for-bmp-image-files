@@ -43,15 +43,6 @@ int main(int argc, char *argv[])
         return 4;
     }
 
-    // Open output file
-    FILE *outptr = fopen(outfile, "w");
-    if (outptr == NULL)
-    {
-        fclose(inptr);
-        printf("Could not create %s.\n", outfile);
-        return 5;
-    }
-
     // Read infile's BITMAPFILEHEADER
     BITMAPFILEHEADER bf;
     fread(&bf, sizeof(BITMAPFILEHEADER), 1, inptr);
@@ -64,12 +55,12 @@ int main(int argc, char *argv[])
     if (bf.bfType != 0x4d42 || bf.bfOffBits != 54 || bi.biSize != 40 ||
         bi.biBitCount != 24 || bi.biCompression != 0)
     {
-        fclose(outptr);
+        
         fclose(inptr);
         printf("Unsupported file format.\n");
         return 6;
     }
-
+    
     // Get image's dimensions
     int height = abs(bi.biHeight);
     int width = bi.biWidth;
@@ -79,7 +70,6 @@ int main(int argc, char *argv[])
     if (image == NULL)
     {
         printf("Not enough memory to store image.\n");
-        fclose(outptr);
         fclose(inptr);
         return 7;
     }
@@ -125,7 +115,16 @@ int main(int argc, char *argv[])
             sepia(height, width, image);
             break;
     }
-
+    
+    // Open output file
+    FILE *outptr = fopen(outfile, "w");
+    if (outptr == NULL)
+    {
+        fclose(inptr);
+        printf("Could not create %s.\n", outfile);
+        return 5;
+    }
+    
     // Write outfile's BITMAPFILEHEADER
     fwrite(&bf, sizeof(BITMAPFILEHEADER), 1, outptr);
 
