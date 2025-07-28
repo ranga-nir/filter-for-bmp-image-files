@@ -13,7 +13,7 @@ This project is a command-line image processing tool that applies various filter
 - **Edges**: Detects and highlights edges in the image using the Sobel operator
 
 ## Requirements
-
+- clang
 - C compiler (GCC recommended)
 - Standard C libraries
 - Make (optional, for building)
